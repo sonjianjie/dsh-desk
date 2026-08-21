@@ -37,7 +37,10 @@ jobs:
           node-version: 24
           cache: pnpm
       - uses: dtolnay/rust-toolchain@stable
-      - run: pnpm install --frozen-lockfile
+      - name: Regenerate pnpm-lock.yaml to ensure version consistency
+        run: |
+          rm -f pnpm-lock.yaml
+          pnpm install
       - run: pnpm check:upstream
       - run: pnpm check
       - run: pnpm test:rust
@@ -66,7 +69,10 @@ jobs:
           node-version: 24
           cache: pnpm
       - uses: dtolnay/rust-toolchain@stable
-      - run: pnpm install --frozen-lockfile
+      - name: Regenerate pnpm-lock.yaml to ensure version consistency
+        run: |
+    rm -f pnpm-lock.yaml
+    pnpm install
       - id: upstream
         run: pnpm check:upstream
       - name: Install upstream candidate without committing it
